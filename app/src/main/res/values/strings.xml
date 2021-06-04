@@ -1,0 +1,94 @@
+<resources>
+    <string name="app_name">ViewInPdf</string>
+    <string name="new_ticket">New Ticket</string>
+    <string name="collection">Collection</string>
+    <string name="cabin_type">Cabin Type</string>
+    <string name="cabin_count">Cabin Count</string>
+    <string name="usage">Usage</string>
+    <string name="feedback">Feedback</string>
+    <string name="headline">Headline</string>
+    <string name="xtop">xtop</string>
+    <string name="xbottom">xBottom</string>
+    <string name="yfront">yFront</string>
+    <string name="data_report">Data Report</string>
+    <string name="download">Download</string>
+
+
+    <string-array name="cabinType">
+        <item>MWC</item>
+        <item>FWC</item>
+        <item>PWD</item>
+        <item>MUR</item>
+        <item>Total</item>
+    </string-array>
+
+    <string-array name="cabinCount">
+        <item>10</item>
+        <item>10</item>
+        <item>10</item>
+        <item>10</item>
+        <item>40</item>
+    </string-array>
+
+    <string-array name="usage">
+        <item>20</item>
+        <item>20</item>
+        <item>20</item>
+        <item>20</item>
+        <item>80</item>
+    </string-array>
+
+    <string-array name="feedback">
+        <item>30</item>
+        <item>30</item>
+        <item>30</item>
+        <item>30</item>
+        <item>120</item>
+    </string-array>
+
+    <string-array name="collection">
+        <item>40</item>
+        <item>40</item>
+        <item>40</item>
+        <item>40</item>
+        <item>160</item>
+    </string-array>
+
+
+    <string-array name="newTicket">
+        <item>5</item>
+        <item>5</item>
+        <item>5</item>
+        <item>5</item>
+        <item>20</item>
+    </string-array>
+
+    <string-array name="heading">
+        <item>Data Report</item>
+        <item>Usage Comparison</item>
+        <item>Feedback</item>
+        <item>Collection</item>
+        <item>Ticket</item>
+    </string-array>
+
+    <string-array name="xTop">
+        <item>xTop</item>
+        <item>xTop</item>
+        <item>xTop</item>
+        <item>xTop</item>
+    </string-array>
+
+    <string-array name="xBottom">
+        <item>xBottom</item>
+        <item>xBottom</item>
+        <item>xBottom</item>
+        <item>xBottom</item>
+    </string-array>
+
+    <string-array name="yStart">
+        <item>yStart</item>
+        <item>yStart</item>
+        <item>yStart</item>
+        <item>yStart</item>
+    </string-array>
+</resources>
