@@ -60,7 +60,7 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             holder.collection2.setText(R.string.collection);
             holder.newTicket2.setText(R.string.new_ticket);
         }
-        else if (position>1 && position<6){
+        else if (position>0 && position<6){
             holder.cType.setText(cType[position-1]);
             holder.cCount.setText(cCount[position-1]);
             holder.usage.setText(collection[position-1]);

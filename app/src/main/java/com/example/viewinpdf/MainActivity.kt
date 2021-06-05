@@ -68,42 +68,45 @@ class MainActivity : AppCompatActivity() {
         button.setOnClickListener(View.OnClickListener {
 
             val scroll =findViewById<ScrollView>(R.id.scrollView)
-            val screen =getBitmapFromView(scroll)
-            val cabin =getBitmapFromView(tableRecycler!!)
+            val screen = getBitmapFromView(scroll)
             val llist =getBitmapFromView(listRecycler!!)
+            val cabin =getBitmapFromView(tableRecycler!!)
+            val pdfHeight = cabin?.height!!+llist?.height!!
+            val pdfWidth = cabin.width
+
 
 
             val document = PdfDocument()
             val pageInfo: PdfDocument.PageInfo  = PdfDocument.PageInfo.Builder(
-               cabin?.width!!,
-                cabin?.height!!+llist?.height!!,
+               pdfWidth,
+                pdfHeight,
                 1).create()
 
             val page: PdfDocument.Page  = document.startPage(pageInfo)
             // Draw the bitmap onto the page
             val canvas: Canvas = page.canvas
-            canvas.drawBitmap(cabin!!, Matrix(), null)
-            canvas.drawBitmap(llist!!,0f,cabin.height.toFloat(),null)
-            cabin.recycle()
-            llist.recycle()
+            canvas.drawBitmap(cabin, Matrix() ,null)
+            canvas.drawBitmap(llist,0f,cabin.height.toFloat(),null)
+//            cabin.recycle()
+//            llist.recycle()
             document.finishPage(page)
 
             // Write the PDF file to a file
             val file = File(getExternalFilesDir(null)!!.absolutePath + "/ll.pdf")
             document.writeTo( FileOutputStream(file))
             document.close()
-
-
         })
     }
 
     private fun getBitmapFromView(view: View): Bitmap? {
         var returnedBitmap :Bitmap ?= null
-//        if (view == tableRecycler ){getRecyclerViewScreenshot(tableRecycler!!)}
-//        else if(view==listRecycler){getRecyclerViewScreenshot(listRecycler!!)}
-//        else{
-
-            view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val exc = view
+//        var wid:Int?=null
+//        if(view == tableRecycler) {
+//            view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+//            wid= view.width
+//        }else{ wid= tableRecycler?.width}
+        view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             returnedBitmap= Bitmap.createBitmap(
                 view.width,
                 view.height,
@@ -114,49 +117,11 @@ class MainActivity : AppCompatActivity() {
             if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
             view.layout(0,view.top, view.right, view.bottom);
             view.draw(canvas)
-
-//        }
+           view.layoutParams=exc.layoutParams
 
         return returnedBitmap
 
     }
 
-
-//    fun getRecyclerViewScreenshot(view: RecyclerView): Bitmap? {
-//        val size = view.adapter!!.itemCount
-//        val holder = view.adapter!!.createViewHolder(view, 0)
-//        view.adapter!!.onBindViewHolder(holder, 0)
-//        holder.itemView.measure(
-//            View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.EXACTLY),
-//            View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-//        )
-//         holder.itemView.layout(0, 0, holder.itemView.measuredWidth, holder.itemView.measuredHeight)
-//        val y= holder.itemView.measuredHeight * size
-//
-//        val bigBitmap = Bitmap.createBitmap(
-//            view.measuredWidth, holder.itemView.measuredHeight * size,
-//            Bitmap.Config.ARGB_8888
-//        )
-//        val bigCanvas = Canvas(bigBitmap)
-//        bigCanvas.drawColor(Color.WHITE)
-//        val paint = Paint()
-//        var iHeight = 0
-//        holder.itemView.isDrawingCacheEnabled = true
-//        holder.itemView.buildDrawingCache()
-////      bigCanvas.drawBitmap(holder.itemView.drawingCache, 0f, iHeight, paint)
-//        holder.itemView.isDrawingCacheEnabled = false
-//        holder.itemView.destroyDrawingCache()
-//        iHeight += holder.itemView.measuredHeight
-//        for (i in 1 until size) {
-//            view.adapter!!.onBindViewHolder(holder, i)
-//            holder.itemView.isDrawingCacheEnabled = true
-//            holder.itemView.buildDrawingCache()
-////           bigCanvas.drawBitmap(holder.itemView.drawingCache, 0f, iHeight, paint)
-//            iHeight += holder.itemView.measuredHeight
-//            holder.itemView.isDrawingCacheEnabled = false
-//            holder.itemView.destroyDrawingCache()
-//        }
-//        return bigBitmap
-//    }
 
 }

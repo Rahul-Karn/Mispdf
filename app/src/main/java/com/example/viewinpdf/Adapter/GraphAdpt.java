@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.viewinpdf.R;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -62,37 +65,53 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
 //            holder.tableRecycler.setHasFixedSize(true);
 //            holder.tableRecycler.setLayoutManager(new LinearLayoutManager(context));
 //            holder.tableRecycler.setAdapter(adapter);
-            holder.tableRecycler.setVisibility(View.GONE);
+//            holder.tableRecycler.setVisibility(View.GONE);
 
 //            holder.headLine.setText(headline[position]);
             holder.headLine.setVisibility(View.GONE);
             holder.xTop.setVisibility(View.GONE);
             holder.xBottom.setVisibility(View.GONE);
             holder.yFront.setVisibility(View.GONE);
-            holder.image.setVisibility(View.GONE);
+            holder.graphView.setVisibility(View.GONE);
+//            holder.image.setVisibility(View.GONE);
 
         }
-        else if(position >1 && position<5) {
-            holder.tableRecycler.setVisibility(View.GONE);
+        else if(position >0 && position<5) {
+//            holder.tableRecycler.setVisibility(View.GONE);
             holder.headLine.setText(headline[position-1]);
             holder.xTop.setText(xTop[position-1]);
             holder.xBottom.setText(xBottom[position-1]);
             holder.yFront.setText(yStart[position-1]);
-            holder.image.setImageResource(image);
-        }
-//        else {
-//            holder.tableRecycler.setVisibility(View.GONE);
-//            holder.headLine.setText(headline[4]);
-//            holder.xTop.setText(xTop[4]);
-//            holder.xBottom.setText(xBottom[4]);
-//            holder.yFront.setText(yStart[4]);
 //            holder.image.setImageResource(image);
-//        }
+
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
+                new DataPoint(0, 1),
+                new DataPoint(1, 3),
+                new DataPoint(2, 40),
+                new DataPoint(3, 9),
+                new DataPoint(4, 6),
+                new DataPoint(5, 3),
+                new DataPoint(6, 6),
+                new DataPoint(7, 1),
+                new DataPoint(8, 2),
+                new DataPoint(9, 2),
+                new DataPoint(10, 4),
+                new DataPoint(50, 100),
+                new DataPoint(100, 22),
+                new DataPoint(150, 2),
+                new DataPoint(200, 20)
+
+        });
+
+        holder.graphView.addSeries(series);
+
+        }
+
     }
 
     @Override
     public int getItemCount() {
-        return 13;
+        return 50;
     }
 
     public static class Holder extends RecyclerView.ViewHolder {
@@ -102,6 +121,7 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
         public TextView yFront;
         public ImageView image;
         public RecyclerView tableRecycler;
+        public GraphView graphView;
 
         public Holder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -109,8 +129,10 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
              xTop =itemView.findViewById(R.id.xTop);
              xBottom =itemView.findViewById(R.id.xBottom);
              yFront =itemView.findViewById(R.id.yStart);
-             image =itemView.findViewById(R.id.imageView);
-             tableRecycler =itemView.findViewById(R.id.table);
+//             image =itemView.findViewById(R.id.imageView);
+//             tableRecycler =itemView.findViewById(R.id.table);
+            graphView = itemView.findViewById(R.id.idGraphView);
+
         }
     }
 }
