@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.HorizontalScrollView
-import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private var tableRecycler :RecyclerView ?= null
     private var listRecycler :RecyclerView ?= null
+    private var hScroll:HorizontalScrollView ?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +67,12 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener(View.OnClickListener {
 
-            val scroll =findViewById<ScrollView>(R.id.scrollView)
-            val screen = getBitmapFromView(scroll)
+            hScroll =findViewById(R.id.hScrollView)
+            val cabin =getBitmapFromView(hScroll!!)
             val llist =getBitmapFromView(listRecycler!!)
-            val cabin =getBitmapFromView(tableRecycler!!)
-            val pdfHeight = cabin?.height!!+llist?.height!!
-            val pdfWidth = cabin.width
 
+            val pdfHeight = hScroll?.measuredHeight!!+listRecycler?.measuredHeight!!
+            val pdfWidth = hScroll!!.width
 
 
             val document = PdfDocument()
@@ -85,10 +84,12 @@ class MainActivity : AppCompatActivity() {
             val page: PdfDocument.Page  = document.startPage(pageInfo)
             // Draw the bitmap onto the page
             val canvas: Canvas = page.canvas
-            canvas.drawBitmap(cabin, Matrix() ,null)
-            canvas.drawBitmap(llist,0f,cabin.height.toFloat(),null)
-//            cabin.recycle()
-//            llist.recycle()
+            canvas.drawBitmap(cabin!!, Matrix(),null)
+            canvas.drawBitmap(llist!!,0f,cabin.height.toFloat(),null)
+
+
+//            toPdf(tableRecycler!!,canvas)
+
             document.finishPage(page)
 
             // Write the PDF file to a file
@@ -96,32 +97,45 @@ class MainActivity : AppCompatActivity() {
             document.writeTo( FileOutputStream(file))
             document.close()
         })
+
     }
+
 
     private fun getBitmapFromView(view: View): Bitmap? {
         var returnedBitmap :Bitmap ?= null
         val exc = view
-//        var wid:Int?=null
-//        if(view == tableRecycler) {
-//            view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-//            wid= view.width
-//        }else{ wid= tableRecycler?.width}
         view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        hScroll?.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             returnedBitmap= Bitmap.createBitmap(
-                view.width,
-                view.height,
+               view.measuredWidth, //hScroll?.measureWidth!!,
+                view.measuredHeight,
                 Bitmap.Config.ARGB_8888
             )
-            val canvas = Canvas(returnedBitmap)
-            val bgDrawable = view.background
-            if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
-            view.layout(0,view.top, view.right, view.bottom);
-            view.draw(canvas)
+
+
+        val btp = Bitmap.createScaledBitmap(
+            returnedBitmap,
+            hScroll?.measuredWidth!!,
+            view.measuredHeight,
+            false
+        )
+        val canvas = Canvas(btp)
+        val bgDrawable = view.background
+        if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
+        view.layout(0,view.top, hScroll!!.measuredWidth, view.bottom)
+        view.draw(canvas)
            view.layoutParams=exc.layoutParams
-
-        return returnedBitmap
-
+        return btp
     }
 
-
+    fun toPdf(view:View,canvas: Canvas){
+        val exe = view
+        if(view==tableRecycler) {
+            view.layout(0, view.top, hScroll!!.measuredWidth, view.height)
+        }else if(view ==listRecycler){
+            view.layout(0, tableRecycler!!.height, hScroll!!.measuredWidth, view.height)
+        }
+        view.draw(canvas)
+        view.layoutParams = exe.layoutParams
+    }
 }

@@ -29,8 +29,6 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
     String[] xBottom;
     String[] yStart;
     int image;
-    String[] cType,cCount,usage,feedback,collection,newTicket;
-
 
     public GraphAdpt(Context context, String[] headline, String[] xTop, String[] xBottom, String[] yStart, int image) {
         this.context = context;
@@ -53,36 +51,19 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull Holder holder, int position) {
-        if (position==0){
-//            cType = new String[]{"MWC","FWC","PWD","MUR","TOTAL"};
-//            cCount= new String[]{"10","10","10","10","50"};
-//            usage= new String[]{"10","10","10","10","50"};
-//            feedback=new String[]{"10","10","10","10","50"};
-//            collection=new String[]{"10","10","10","10","50"};
-//            newTicket=new String[]{"10","10","10","10","50"};
-//
-//            DataReportAdpt adapter = new DataReportAdpt(context,cType,cCount,usage,feedback,collection,newTicket);
-//            holder.tableRecycler.setHasFixedSize(true);
-//            holder.tableRecycler.setLayoutManager(new LinearLayoutManager(context));
-//            holder.tableRecycler.setAdapter(adapter);
-//            holder.tableRecycler.setVisibility(View.GONE);
-
-//            holder.headLine.setText(headline[position]);
+        if (position==0 ){
             holder.headLine.setVisibility(View.GONE);
             holder.xTop.setVisibility(View.GONE);
             holder.xBottom.setVisibility(View.GONE);
             holder.yFront.setVisibility(View.GONE);
             holder.graphView.setVisibility(View.GONE);
-//            holder.image.setVisibility(View.GONE);
-
         }
         else if(position >0 && position<5) {
-//            holder.tableRecycler.setVisibility(View.GONE);
-            holder.headLine.setText(headline[position-1]);
+
+            holder.headLine.setText(headline[position]);
             holder.xTop.setText(xTop[position-1]);
             holder.xBottom.setText(xBottom[position-1]);
             holder.yFront.setText(yStart[position-1]);
-//            holder.image.setImageResource(image);
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, 1),
@@ -119,8 +100,6 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
         public TextView xTop;
         public TextView xBottom;
         public TextView yFront;
-        public ImageView image;
-        public RecyclerView tableRecycler;
         public GraphView graphView;
 
         public Holder(@NonNull @NotNull View itemView) {
@@ -129,8 +108,6 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
              xTop =itemView.findViewById(R.id.xTop);
              xBottom =itemView.findViewById(R.id.xBottom);
              yFront =itemView.findViewById(R.id.yStart);
-//             image =itemView.findViewById(R.id.imageView);
-//             tableRecycler =itemView.findViewById(R.id.table);
             graphView = itemView.findViewById(R.id.idGraphView);
 
         }

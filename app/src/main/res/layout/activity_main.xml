@@ -30,30 +30,30 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/headline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/data_report"
-            android:layout_marginStart="8dp"
-            android:textStyle="bold"/>
-<HorizontalScrollView
-    android:id="@+id/hScrollView"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/table"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:padding="3dp"/>
-</HorizontalScrollView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:padding="3dp"/>
+            <TextView
+                android:id="@+id/headline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/data_report"
+                android:layout_marginStart="8dp"
+                android:textStyle="bold"/>
+            <HorizontalScrollView
+                android:id="@+id/hScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/table"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:padding="3dp"/>
+            </HorizontalScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:padding="3dp"/>
 
         </LinearLayout>
     </ScrollView>

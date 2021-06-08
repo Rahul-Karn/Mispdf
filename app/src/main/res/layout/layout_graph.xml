@@ -13,17 +13,6 @@
         android:layout_height="wrap_content"
         android:text="@string/headline"
         android:textStyle="bold"/>
-<!--    <HorizontalScrollView-->
-<!--        android:id="@+id/hScrollView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/table"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="8dp"-->
-<!--            android:padding="3dp"/>-->
-<!--    </HorizontalScrollView>-->
 
     <TextView
         android:id="@+id/xTop"
@@ -54,14 +43,7 @@
             android:layout_weight="1.9"
             android:padding="5dp"/>
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1.95"-->
-<!--            android:scaleType="fitXY"-->
-<!--            app:srcCompat="@drawable/ic_launcher_background" />-->
-    </LinearLayout>
+      </LinearLayout>
 
     <TextView
         android:id="@+id/xBottom"
