@@ -12,6 +12,7 @@
     <string name="yfront">yFront</string>
     <string name="data_report">Data Report</string>
     <string name="download">Download</string>
+    <string name="summary">Summary</string>
 
 
     <string-array name="cabinType">
