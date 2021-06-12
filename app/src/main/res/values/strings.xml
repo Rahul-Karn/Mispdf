@@ -13,6 +13,8 @@
     <string name="data_report">Data Report</string>
     <string name="download">Download</string>
     <string name="summary">Summary</string>
+    <string name="itextexp">iTextExp</string>
+    <string name="bmpexp">BmpExp</string>
 
 
     <string-array name="cabinType">

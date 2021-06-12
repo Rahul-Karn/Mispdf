@@ -5,28 +5,30 @@ import android.graphics.Bitmap
 import com.itextpdf.io.image.ImageData
 import com.itextpdf.io.image.ImageDataFactory
 import com.itextpdf.io.source.ByteArrayOutputStream
+import com.itextpdf.kernel.colors.Color
+import com.itextpdf.kernel.colors.DeviceCmyk
 import com.itextpdf.kernel.geom.PageSize
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfWriter
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas
 import com.itextpdf.layout.Document
-import com.itextpdf.layout.element.Cell
-import com.itextpdf.layout.element.Image
-import com.itextpdf.layout.element.Paragraph
-import com.itextpdf.layout.element.Table
+import com.itextpdf.layout.element.*
 import com.itextpdf.layout.property.TextAlignment
 import com.itextpdf.layout.property.UnitValue
 import java.io.File
 
 
 class IText(context: Context) {
-    private val file = File(context.getExternalFilesDir(null)!!.absolutePath + "/test.pdf")
+    private val file = File(context.getExternalFilesDir(null)!!.absolutePath + "/iText.pdf")
     private val pdfDocument = PdfDocument(PdfWriter(file))
-    private val width =PageSize.Default.width
+    private val width = PageSize.Default.width+80
     private val height =PageSize.Default.height
     private var document :Document ?= null
+
     fun openPdf() {
-        document = Document(pdfDocument, PageSize.Default)
+        document = Document(pdfDocument, PageSize(width,height))
     }
+
     fun addText(txt: String) {
         val text = Paragraph(txt)
         document!!.add(text)
@@ -38,11 +40,21 @@ class IText(context: Context) {
         text.setFontSize(20f)
         document!!.add(text)
 
+
         val letter = Paragraph(subHead)
         letter.setBold()
         letter.setFontSize(14f)
         letter.setMarginBottom(10f)
         document!!.add(letter)
+
+        val canvas = PdfCanvas(pdfDocument.getPage(1))
+//        val magentaColor: Color = DeviceCmyk(0f, 1f, 0f, 0f)
+        canvas
+            .moveTo(0.0, 730.0)
+            .lineTo(width.toDouble(), 730.0)
+          .closePathStroke()
+
+
     }
 
     fun addSubHeading(txt :String){
@@ -53,12 +65,12 @@ class IText(context: Context) {
         document!!.add(boldText)
     }
 
-    val cSize = width/6
+    val cSize = width/12
     var table :Table ?=null
 
 
     fun drawTable(): Table? {
-        table =Table(UnitValue.createPercentArray(floatArrayOf(cSize,cSize,cSize,cSize,cSize,cSize))).useAllAvailableWidth()
+        table =Table(UnitValue.createPercentArray(floatArrayOf(cSize,cSize,cSize,cSize,cSize,cSize,cSize,cSize,cSize,cSize,cSize,cSize))).useAllAvailableWidth()
         return table
     }
 
@@ -72,10 +84,21 @@ class IText(context: Context) {
             table?.addCell(Cell().add(Paragraph("Feedback").setBold().setTextAlignment(TextAlignment.CENTER)))
             table?.addCell(Cell().add(Paragraph("collection").setBold().setTextAlignment(TextAlignment.CENTER)))
             table?.addCell(Cell().add(Paragraph("New Ticket").setBold().setTextAlignment(TextAlignment.CENTER)))
+            table?.addCell(Cell().add(Paragraph("Cabin Type").setBold().setTextAlignment(TextAlignment.CENTER)))
+            table?.addCell(Cell().add(Paragraph("CabinType").setBold().setTextAlignment(TextAlignment.CENTER)))
+            table?.addCell(Cell().add(Paragraph("Usage").setBold().setTextAlignment(TextAlignment.CENTER)))
+            table?.addCell(Cell().add(Paragraph("Feedback").setBold().setTextAlignment(TextAlignment.CENTER)))
+            table?.addCell(Cell().add(Paragraph("collection").setBold().setTextAlignment(TextAlignment.CENTER)))
+            table?.addCell(Cell().add(Paragraph("New Ticket").setBold().setTextAlignment(TextAlignment.CENTER)))
 
-            var i =0
-            for (entry in cType) {
-
+        for(i in 0 ..cType.size-1)
+        {
+                table?.addCell(Cell().add(Paragraph(cType[i]).setTextAlignment(TextAlignment.CENTER)))
+                table?.addCell(Cell().add(Paragraph(cCount[i]).setTextAlignment(TextAlignment.CENTER)))
+                table?.addCell(Cell().add(Paragraph(usage[i]).setTextAlignment(TextAlignment.CENTER)))
+                table?.addCell(Cell().add(Paragraph(feedback[i]).setTextAlignment(TextAlignment.CENTER)))
+                table?.addCell(Cell().add(Paragraph(collection[i]).setTextAlignment(TextAlignment.CENTER)))
+                table?.addCell(Cell().add(Paragraph(newTicket[i]).setTextAlignment(TextAlignment.CENTER)))
                 table?.addCell(Cell().add(Paragraph(cType[i]).setTextAlignment(TextAlignment.CENTER)))
                 table?.addCell(Cell().add(Paragraph(cCount[i]).setTextAlignment(TextAlignment.CENTER)))
                 table?.addCell(Cell().add(Paragraph(usage[i]).setTextAlignment(TextAlignment.CENTER)))
@@ -83,7 +106,7 @@ class IText(context: Context) {
                 table?.addCell(Cell().add(Paragraph(collection[i]).setTextAlignment(TextAlignment.CENTER)))
                 table?.addCell(Cell().add(Paragraph(newTicket[i]).setTextAlignment(TextAlignment.CENTER)))
 
-                i+=1
+
             }
 
             document!!.add(table)

@@ -72,6 +72,7 @@ public class GraphAdpt extends RecyclerView.Adapter<GraphAdpt.Holder>{
 
             DataReportAdpt adapter = new DataReportAdpt(context,cType,cCount,usage,feedback,collection,newTicket,dataReportCallback);
             holder.tableRecycler.setHasFixedSize(true);
+            holder.tableRecycler.setNestedScrollingEnabled(false);
             holder.tableRecycler.setLayoutManager(new LinearLayoutManager(context));
             holder.tableRecycler.setAdapter(adapter);
 

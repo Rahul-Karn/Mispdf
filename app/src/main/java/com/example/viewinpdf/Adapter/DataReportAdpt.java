@@ -22,12 +22,8 @@ import java.util.List;
 public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHolder>{
 
     Context context;
-    String[] cType;
-    String[] cCount;
-    String[] usage;
-    String[] feedback;
-    String[] collection;
-    String[] newTicket;
+    String[] cType,cCount,usage,feedback,collection,newTicket;
+
     private DataReportCallback dataReportCallback;
 
     public DataReportAdpt(Context context, String[] cType, String[] cCount, String[] usage, String[] feedback, String[] collection, String[] newTicket,DataReportCallback dataReportCallback) {
@@ -62,6 +58,12 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             holder.feedback.setText(R.string.feedback);
             holder.collection.setText(R.string.collection);
             holder.newTicket.setText(R.string.new_ticket);
+            holder.cType2.setText(R.string.cabin_type);
+            holder.cCount2.setText(R.string.cabin_count);
+            holder.usage2.setText(R.string.usage);
+            holder.feedback2.setText(R.string.feedback);
+            holder.collection2.setText(R.string.collection);
+            holder.newTicket2.setText(R.string.new_ticket);
 
 
         }
@@ -72,10 +74,16 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             holder.feedback.setText(feedback[position-1]);
             holder.collection.setText(collection[position-1]);
             holder.newTicket.setText(newTicket[position-1]);
+            holder.cType2.setText(cType[position-1]);
+            holder.cCount2.setText(cCount[position-1]);
+            holder.usage2.setText(collection[position-1]);
+            holder.feedback2.setText(feedback[position-1]);
+            holder.collection2.setText(collection[position-1]);
+            holder.newTicket2.setText(newTicket[position-1]);
 
-            dataReportCallback.onMethodCallback(  String.valueOf(cType[position-1]),
-                    String.valueOf(cType[position-1]),String.valueOf(cType[position-1]),
-                  String.valueOf(cType[position-1]),String.valueOf(cType[position-1]),String.valueOf(cType[position-1]));
+            dataReportCallback.onMethodCallback(  cType[position-1],
+                    cCount[position-1],usage[position-1],
+                  feedback[position-1],collection[position-1],newTicket[position-1]);
 
 
 
@@ -87,11 +95,18 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             holder.feedback.setText(feedback[4]);
             holder.collection.setText(collection[4]);
             holder.newTicket.setText(newTicket[4]);
+            holder.cType2.setText(cType[4]);
+            holder.cCount2.setText(cCount[4]);
+            holder.usage2.setText(collection[4]);
+            holder.feedback2.setText(feedback[4]);
+            holder.collection2.setText(collection[4]);
+            holder.newTicket2.setText(newTicket[4]);
 
 
-            dataReportCallback.onMethodCallback(  String.valueOf(cType[4]),
-                    String.valueOf(cType[4]),String.valueOf(cType[4]),
-                    String.valueOf(cType[4]),String.valueOf(cType[4]),String.valueOf(cType[4]));
+
+            dataReportCallback.onMethodCallback( cType[4],
+                    cCount[4],usage[4],
+                   feedback[4],collection[4],newTicket[4]);
         }
 
     }
@@ -108,6 +123,12 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
         public TextView feedback;
         public TextView collection;
         public TextView newTicket;
+        public TextView cType2;
+        public TextView cCount2;
+        public TextView usage2;
+        public TextView feedback2;
+        public TextView collection2;
+        public TextView newTicket2;
 
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -119,6 +140,12 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             feedback= itemView.findViewById(R.id.feedBack);
             collection= itemView.findViewById(R.id.collection);
             newTicket= itemView.findViewById(R.id.newTicket);
+            cType2 = itemView.findViewById(R.id.cType2);
+            cCount2= itemView.findViewById(R.id.cCount2);
+            usage2= itemView.findViewById(R.id.usage2);
+            feedback2= itemView.findViewById(R.id.feedBack2);
+            collection2= itemView.findViewById(R.id.collection2);
+            newTicket2= itemView.findViewById(R.id.newTicket2);
 
 
         }

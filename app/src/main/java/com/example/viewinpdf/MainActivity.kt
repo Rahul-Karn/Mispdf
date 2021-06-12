@@ -1,10 +1,12 @@
 package com.example.viewinpdf
 
 import android.graphics.*
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.HorizontalScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.viewinpdf.Adapter.DataReportAdpt
 import com.example.viewinpdf.Adapter.GraphAdpt
 import com.jjoe64.graphview.GraphView
+import java.io.File
+import java.io.FileOutputStream
 
 
 class MainActivity : AppCompatActivity(),DataReportAdpt.DataReportCallback {
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity(),DataReportAdpt.DataReportCallback {
     private var getheading: ArrayList<String> = ArrayList()
 
     private var listRecycler :RecyclerView ?= null
+    private var hScroll:HorizontalScrollView ?=null
 
     var graphAdpt:GraphAdpt ?= null
 
@@ -49,7 +54,8 @@ class MainActivity : AppCompatActivity(),DataReportAdpt.DataReportCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
          listRecycler  = findViewById(R.id.list)
-        val button =findViewById<Button>(R.id.button)
+        val iTextPdf =findViewById<Button>(R.id.iTextExp)
+        val bmpPdf =findViewById<Button>(R.id.bmpExp)
 
 
         yStart= resources.getStringArray(R.array.yStart)
@@ -65,12 +71,12 @@ class MainActivity : AppCompatActivity(),DataReportAdpt.DataReportCallback {
         item_count = graphAdpt!!.itemCount
 
 
-        button.setOnClickListener(View.OnClickListener {
+        iTextPdf.setOnClickListener(View.OnClickListener {
             convertGraph()
             val itext = IText(this)
             itext.openPdf()
             itext.addHeading("Summary","Sub Summary")
-            for(j in 0 until item_count) {
+            for(j in 0 until getheading.size) {
              if(j==0) {
                  itext.addSubHeading(getheading[j])
                  itext.drawTable()
@@ -84,10 +90,43 @@ class MainActivity : AppCompatActivity(),DataReportAdpt.DataReportCallback {
                  )
              }else {
                  itext.addSubHeading(getheading[j])
-                 itext.drawImage(getBitmap[j-1])
+                 itext.drawImage(getBitmap[j - 1])
              }
             }
             itext.closePdf()
+        })
+
+
+
+        bmpPdf.setOnClickListener(View.OnClickListener {
+
+            hScroll =findViewById(R.id.hScrollView)
+            val cabin =getBitmapFromView(hScroll!!)
+            val llist =getBitmapFromView(listRecycler!!)
+
+            val pdfHeight = hScroll?.measuredHeight!!+listRecycler?.measuredHeight!!
+            val pdfWidth = hScroll!!.width
+
+
+            val document = PdfDocument()
+            val pageInfo: PdfDocument.PageInfo  = PdfDocument.PageInfo.Builder(
+                pdfWidth,
+                pdfHeight,
+                1).create()
+
+            val page: PdfDocument.Page  = document.startPage(pageInfo)
+            // Draw the bitmap onto the page
+            val canvas: Canvas = page.canvas
+            canvas.drawBitmap(cabin!!, Matrix(),null)
+            canvas.drawBitmap(llist!!,0f,cabin.height.toFloat(),null)
+
+
+            document.finishPage(page)
+
+            // Write the PDF file to a file
+            val file = File(getExternalFilesDir(null)!!.absolutePath + "/bmp.pdf")
+            document.writeTo( FileOutputStream(file))
+            document.close()
         })
 
     }
@@ -111,40 +150,64 @@ class MainActivity : AppCompatActivity(),DataReportAdpt.DataReportCallback {
     }
 
 
-    private fun getBitmapFromViewgraph(view: View) {
-        val exc =view
+    private fun getBitmapFromView(view: View): Bitmap? {
+        var returnedBitmap :Bitmap ?= null
+        val exc = view
+        view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        hScroll?.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        returnedBitmap= Bitmap.createBitmap(
+            view.measuredWidth, //hScroll?.measureWidth!!,
+            view.measuredHeight,
+            Bitmap.Config.ARGB_8888
+        )
 
+
+        val btp = Bitmap.createScaledBitmap(
+            returnedBitmap,
+            hScroll?.measuredWidth!!,
+            view.measuredHeight,
+            false
+        )
+        val canvas = Canvas(btp)
+        val bgDrawable = view.background
+        if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
+        view.layout(0,view.top, hScroll!!.measuredWidth, view.bottom)
+        view.draw(canvas)
+        view.layoutParams=exc.layoutParams
+        return btp
+    }
+
+    private fun getBitmapOfViewgraph(view: View) {
         view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val returnedBitmap: Bitmap = Bitmap.createBitmap(
-            view.width,  //hScroll?.measureWidth!!,
+            view.width,
             view.height,
             Bitmap.Config.ARGB_8888
         )
         val canvas = Canvas(returnedBitmap)
         val bgDrawable = view.background
         if (bgDrawable != null) bgDrawable.draw(canvas) else canvas.drawColor(Color.WHITE)
-//        view.layout(0, view.top, view.measuredWidth, view.bottom)
         view.draw(canvas)
         getBitmap.add(returnedBitmap)
-//        view.layoutParams = exc.layoutParams
-//        return returnedBitmap
     }
 
 
     private fun convertGraph(){
         for(j in 0 until item_count){
-            val v = listRecycler?.findViewHolderForAdapterPosition(j)?.itemView
-            val header = v?.findViewById<TextView>(R.id.headline)
-            val s = header?.text
-            getheading.add(s!! as String)
+            val v = listRecycler!!.findViewHolderForAdapterPosition(j)?.itemView
+                if (v != null) {
+                    val header = v.findViewById<TextView>(R.id.headline)
+                    val s = header!!.text
+                    getheading.add(s!! as String)
+                }
 
-            if(j!=0) {
-                val view = v.findViewById<GraphView>(R.id.idGraphView)
-                getBitmapFromViewgraph(view!!)
-            }
+                if (j != 0) {
+                    if (v != null) {
+                        val view = v.findViewById<GraphView>(R.id.idGraphView)
+                        getBitmapOfViewgraph(view)
+                    }
+                }
         }
-
-
 
     }
 }
