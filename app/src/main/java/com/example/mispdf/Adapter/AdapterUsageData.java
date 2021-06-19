@@ -1,32 +1,43 @@
-package com.example.viewinpdf.Adapter;
+/*
+ * Copyright 2013-2017 Amazon.com,
+ * Inc. or its affiliates. All Rights Reserved.
+ *
+ * Licensed under the Amazon Software License (the "License").
+ * You may not use this file except in compliance with the
+ * License. A copy of the License is located at
+ *
+ *      http://aws.amazon.com/asl/
+ *
+ * or in the "license" file accompanying this file. This file is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ * CONDITIONS OF ANY KIND, express or implied. See the License
+ * for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.example.mispdf.Adapter;
+
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.viewinpdf.R;
+import com.example.mispdf.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.sql.Array;
-import java.util.List;
 
-public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHolder>{
+public class AdapterUsageData extends RecyclerView.Adapter<AdapterUsageData.MyViewHolder> {
 
     Context context;
     String[] cType,cCount,usage,feedback,collection,newTicket;
 
-    private DataReportCallback dataReportCallback;
-
-    public DataReportAdpt(Context context, String[] cType, String[] cCount, String[] usage, String[] feedback, String[] collection, String[] newTicket,DataReportCallback dataReportCallback) {
+    public AdapterUsageData(Context context,String[] cType, String[] cCount, String[] usage, String[] feedback, String[] collection, String[] newTicket) {
         this.context = context;
         this.cType = cType;
         this.cCount = cCount;
@@ -34,23 +45,19 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
         this.feedback = feedback;
         this.collection = collection;
         this.newTicket = newTicket;
-        this.dataReportCallback = dataReportCallback;
-
-
-
     }
 
-    @NonNull
+
     @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.layout_table,parent, false);
-        return new ViewHolder(view);
+                .inflate(R.layout.element_report_data,parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         if (position==0){
             holder.cType.setText(R.string.cabin_type);
             holder.cCount.setText(R.string.cabin_count);
@@ -64,9 +71,8 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             holder.feedback2.setText(R.string.feedback);
             holder.collection2.setText(R.string.collection);
             holder.newTicket2.setText(R.string.new_ticket);
-
-
         }
+
         else if (position>0 && position<6){
             holder.cType.setText(cType[position-1]);
             holder.cCount.setText(cCount[position-1]);
@@ -80,14 +86,8 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             holder.feedback2.setText(feedback[position-1]);
             holder.collection2.setText(collection[position-1]);
             holder.newTicket2.setText(newTicket[position-1]);
-
-            dataReportCallback.onMethodCallback(  cType[position-1],
-                    cCount[position-1],usage[position-1],
-                  feedback[position-1],collection[position-1],newTicket[position-1]);
-
-
-
         }
+
         else{
             holder.cType.setText(cType[4]);
             holder.cCount.setText(cCount[4]);
@@ -102,21 +102,16 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             holder.collection2.setText(collection[4]);
             holder.newTicket2.setText(newTicket[4]);
 
-
-
-            dataReportCallback.onMethodCallback( cType[4],
-                    cCount[4],usage[4],
-                   feedback[4],collection[4],newTicket[4]);
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return (40);
+               return 11;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView cType;
         public TextView cCount;
         public TextView usage;
@@ -130,10 +125,8 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
         public TextView collection2;
         public TextView newTicket2;
 
-
-        public ViewHolder(@NonNull @NotNull View itemView) {
+        public MyViewHolder(View itemView) {
             super(itemView);
-
             cType = itemView.findViewById(R.id.cType);
             cCount= itemView.findViewById(R.id.cCount);
             usage= itemView.findViewById(R.id.usage);
@@ -146,13 +139,6 @@ public class DataReportAdpt extends RecyclerView.Adapter<DataReportAdpt.ViewHold
             feedback2= itemView.findViewById(R.id.feedBack2);
             collection2= itemView.findViewById(R.id.collection2);
             newTicket2= itemView.findViewById(R.id.newTicket2);
-
-
         }
     }
-    public  interface DataReportCallback {
-        void onMethodCallback(String cType ,String  cCount ,String  usage ,
-                              String feedback , String collection , String newTicket );
-    }
-
 }

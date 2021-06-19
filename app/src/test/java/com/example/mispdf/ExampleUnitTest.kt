@@ -1,4 +1,4 @@
-package com.example.viewinpdf
+package com.example.mispdf
 
 import org.junit.Test
 

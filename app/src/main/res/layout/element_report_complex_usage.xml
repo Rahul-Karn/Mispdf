@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="@string/datareport"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+    <HorizontalScrollView
+        android:id="@+id/horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        tools:ignore="UselessParent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dataGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        />
+    </HorizontalScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="@string/usages_comparision"
+        android:textSize="12sp"
+        android:textStyle="bold"
+         />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/usageComparison"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="@string/feedback_disctribution"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/feedbackDistribution"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="@string/collection_comparison"
+        android:textSize="12sp"
+        android:textStyle="bold"
+         />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/collectionTimeline"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+         />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:text="@string/ticket_resolution_chart"
+        android:textSize="12sp"
+        android:textStyle="bold"
+       />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/ticketResolutionTimeline"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        />
+
+</LinearLayout>

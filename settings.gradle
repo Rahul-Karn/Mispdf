@@ -1,2 +1,2 @@
-rootProject.name = "ViewInPdf"
+rootProject.name = "MisPdf"
 include ':app'

@@ -1,59 +1,73 @@
-package com.example.viewinpdf
+package com.example.mispdf
 
+import android.R
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.itextpdf.io.image.ImageData
 import com.itextpdf.io.image.ImageDataFactory
 import com.itextpdf.io.source.ByteArrayOutputStream
-import com.itextpdf.kernel.colors.Color
-import com.itextpdf.kernel.colors.DeviceCmyk
+import com.itextpdf.kernel.colors.DeviceRgb
 import com.itextpdf.kernel.geom.PageSize
 import com.itextpdf.kernel.pdf.PdfDocument
 import com.itextpdf.kernel.pdf.PdfWriter
-import com.itextpdf.kernel.pdf.canvas.PdfCanvas
 import com.itextpdf.layout.Document
+import com.itextpdf.layout.borders.SolidBorder
 import com.itextpdf.layout.element.*
+import com.itextpdf.layout.layout.LayoutArea
+import com.itextpdf.layout.layout.LayoutResult
+import com.itextpdf.layout.layout.RootLayoutArea
+import com.itextpdf.layout.property.HorizontalAlignment
 import com.itextpdf.layout.property.TextAlignment
 import com.itextpdf.layout.property.UnitValue
+import com.itextpdf.layout.renderer.DivRenderer
+import com.itextpdf.layout.renderer.DocumentRenderer
 import java.io.File
 
 
 class IText(context: Context) {
     private val file = File(context.getExternalFilesDir(null)!!.absolutePath + "/iText.pdf")
     private val pdfDocument = PdfDocument(PdfWriter(file))
-    private val width = PageSize.Default.width+80
-    private val height =PageSize.Default.height
+    private val width = 1150f //PageSize.Default.width+80
+    private val height = 1700f //PageSize.Default.height
     private var document :Document ?= null
 
     fun openPdf() {
         document = Document(pdfDocument, PageSize(width,height))
+        document!!.setRenderer( CustomDocumentRenderer(document!!))
     }
+
 
     fun addText(txt: String) {
         val text = Paragraph(txt)
         document!!.add(text)
     }
 
-    fun addHeading(head: String,subHead :String) {
-        val text = Paragraph(head)
-        text.setBold()
-        text.setFontSize(20f)
-        document!!.add(text)
 
+    fun addHeading(head: String, subHead :String, context: Context) {
+
+        val bmp = BitmapFactory.decodeResource(context.resources, R.drawable.ic_dialog_alert)
+        val stream = ByteArrayOutputStream()
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100,stream)
+        val byteArray = stream.toByteArray()
+        val data: ImageData = ImageDataFactory.create(byteArray)
+        val icon = Image(data)
+        icon.scaleAbsolute(30f, 30f)
+//        document!!.add(icon)
 
         val letter = Paragraph(subHead)
         letter.setBold()
         letter.setFontSize(14f)
-        letter.setMarginBottom(10f)
-        document!!.add(letter)
 
-        val canvas = PdfCanvas(pdfDocument.getPage(1))
-//        val magentaColor: Color = DeviceCmyk(0f, 1f, 0f, 0f)
-        canvas
-            .moveTo(0.0, 730.0)
-            .lineTo(width.toDouble(), 730.0)
-          .closePathStroke()
-
+        val text = Paragraph()
+//        text.add(icon)
+        text.add(head +"\n")
+        text.add(letter)
+        text.setBold()
+        text.setPadding(5f)
+        text.setFontSize(20f)
+        text.setBackgroundColor(DeviceRgb(0xA6, 0xCB, 0x0B))
+        document!!.add(text)
 
     }
 
@@ -61,11 +75,12 @@ class IText(context: Context) {
         val boldText = Paragraph(txt)
         boldText.setBold()
         boldText.setFontSize(16f)
+        boldText.setPadding(5f)
         boldText.setMarginTop(25f)
         document!!.add(boldText)
     }
 
-    val cSize = width/12
+    private val cSize = width/12
     var table :Table ?=null
 
 
@@ -75,8 +90,8 @@ class IText(context: Context) {
     }
 
 
-    fun drawTableCell(cType :ArrayList<String>,cCount :ArrayList<String>,usage :ArrayList<String>,
-                  feedback :ArrayList<String>,collection :ArrayList<String>,newTicket :ArrayList<String>){
+    fun drawTableCell(cType :Array<String>,cCount :Array<String>,usage :Array<String>,
+                  feedback :Array<String>,collection :Array<String>,newTicket :Array<String>){
 
             table?.addCell(Cell().add(Paragraph("Cabin Type").setBold().setTextAlignment(TextAlignment.CENTER)))
             table?.addCell(Cell().add(Paragraph("CabinType").setBold().setTextAlignment(TextAlignment.CENTER)))
@@ -125,12 +140,47 @@ class IText(context: Context) {
         val data: ImageData = ImageDataFactory.create(byteArray)
         val img = Image(data)
         img.setMarginBottom(25f)
-        img.scaleAbsolute(width-80, (height/(3)))
+        img.setHorizontalAlignment(HorizontalAlignment.CENTER)
+        img.scaleAbsolute((width/2).toFloat(), ((height/(7.3)).toFloat()))
         document!!.add(img)
     }
 
 
     fun closePdf(){
         return document!!.close()
+    }
+
+
+}
+
+internal class CustomDocumentRenderer(document: Document?) :
+    DocumentRenderer(document) {
+    override fun updateCurrentArea(overflowResult: LayoutResult?): LayoutArea {
+        val area = super.updateCurrentArea(overflowResult) // margins are applied on this level
+        val newBBox = area.bBox.clone()
+
+        // apply border
+        val borderWidths = floatArrayOf(10f, 10f, 10f, 10f)
+        newBBox.applyMargins(
+            borderWidths[0],
+            borderWidths[1], borderWidths[2], borderWidths[3], false
+        )
+
+        // this div will be added as a background
+        val div = Div()
+            .setWidth(newBBox.width)
+            .setHeight(newBBox.height)
+            .setBorder(SolidBorder(10F))
+//            .setBackgroundColor(ColorConstants.BLUE)
+        addChild(DivRenderer(div))
+
+        // apply padding
+        val paddingWidths = floatArrayOf(20f, 20f, 20f, 20f)
+        newBBox.applyMargins(
+            paddingWidths[0],
+            paddingWidths[1], paddingWidths[2], paddingWidths[3], false
+        )
+
+        return RootLayoutArea(area.pageNumber, newBBox).also { currentArea = it }
     }
 }
