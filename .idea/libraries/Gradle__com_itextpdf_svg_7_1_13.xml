@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.itextpdf:svg:7.1.13">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/svg/7.1.13/40782da63458e9ee8d931e839f023277aa76fc54/svg-7.1.13.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/svg/7.1.13/6600b0b1886469e94cea967f86d4e353e25d5d5b/svg-7.1.13-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.itextpdf/svg/7.1.13/39d3c003477c012cd3aa9098a254e0fccaecc37a/svg-7.1.13-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
