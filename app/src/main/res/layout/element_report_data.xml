@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="12">
+            <TextView
+                android:id="@+id/cType"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/cabin_type" />
+
+            <TextView
+                android:id="@+id/cCount"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/cabin_count" />
+
+            <TextView
+                android:id="@+id/usage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/usage" />
+
+            <TextView
+                android:id="@+id/feedBack"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/feedback" />
+
+            <TextView
+                android:id="@+id/collection"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/collection" />
+
+            <TextView
+                android:id="@+id/newTicket"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:text="@string/new_ticket" />
+
+            <TextView
+                android:id="@+id/cType2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/cabin_type" />
+
+            <TextView
+                android:id="@+id/cCount2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:text="@string/cabin_count" />
+
+            <TextView
+                android:id="@+id/usage2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/usage" />
+
+            <TextView
+                android:id="@+id/feedBack2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/feedback" />
+
+            <TextView
+                android:id="@+id/collection2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/collection" />
+
+            <TextView
+                android:id="@+id/newTicket2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:text="@string/new_ticket" />
+
+     </LinearLayout>

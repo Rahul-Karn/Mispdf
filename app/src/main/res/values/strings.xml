@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MisPdf</string>
+    <string name="datareport">DataReport</string>
+    <string name="usages_comparision">Usages Comparision</string>
+    <string name="feedback_disctribution">Feedback Disctribution</string>
+    <string name="ticket_resolution_chart">Ticket Resolution Chart</string>
+    <string name="collection_comparison">Collection Comparison</string>
+    <string name="new_ticket">New Ticket</string>
+    <string name="collection">Collection</string>
+    <string name="feedback">Feedback</string>
+    <string name="usage">Usage</string>
+    <string name="cabin_count">Cabin Count</string>
+    <string name="cabin_type">Cabin type</string>
+    <string name="bmpexp">BmpExp</string>
+</resources>
